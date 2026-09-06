@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartBook</title>
+  <meta name="description" content="Catatan proyek yang sederhana, dengan AI Secretary." />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+
+  <!-- ===================== AUTH SCREEN ===================== -->
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-card">
+      <h1 class="auth-logo">SmartBook</h1>
+      <p class="auth-tagline">Catatan proyek yang sederhana, dengan AI Secretary.</p>
+
+      <form id="loginForm" class="auth-form">
+        <label for="loginEmail">Email</label>
+        <input id="loginEmail" type="email" required autocomplete="email" />
+        <label for="loginPassword">Kata sandi</label>
+        <input id="loginPassword" type="password" required autocomplete="current-password" />
+        <button type="submit" class="btn-primary btn-block">Masuk</button>
+        <button type="button" id="forgotPasswordBtn" class="btn-link">Lupa kata sandi?</button>
+      </form>
+
+      <form id="signupForm" class="auth-form hidden">
+        <label for="signupEmail">Email</label>
+        <input id="signupEmail" type="email" required autocomplete="email" />
+        <label for="signupPassword">Kata sandi (minimal 6 karakter)</label>
+        <input id="signupPassword" type="password" required minlength="6" autocomplete="new-password" />
+        <button type="submit" class="btn-primary btn-block">Buat akun</button>
+      </form>
+
+      <p id="authError" class="auth-error hidden"></p>
+
+      <button type="button" id="toggleAuthMode" class="btn-link">Belum punya akun? Daftar</button>
+    </div>
+  </div>
+
+  <!-- ===================== APP SHELL ===================== -->
+  <div id="appShell" class="app-shell hidden">
+    <header class="topbar">
+      <button id="menuToggle" class="btn-icon" aria-label="Buka menu">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" width="20" height="20"><path d="M3 5h14M3 10h14M3 15h14"/></svg>
+      </button>
+
+      <div class="search-wrap">
+        <input id="globalSearch" type="search" placeholder="Cari catatan (judul, isi, proyek, kategori, tag)…" autocomplete="off" />
+        <div id="searchResults" class="search-results hidden"></div>
+      </div>
+
+      <div class="add-menu-wrap">
+        <button id="addBtn" class="btn-primary">+ Tambah</button>
+        <div id="addMenu" class="add-menu hidden">
+          <a href="#/projects/new">Proyek baru</a>
+          <a href="#/notes/new">Catatan baru</a>
+        </div>
+      </div>
+    </header>
+
+    <nav id="sideNav" class="side-nav">
+      <div class="side-nav-logo">SmartBook</div>
+      <a href="#/dashboard" data-route="dashboard">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><rect x="2.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="2.5" width="6" height="6" rx="1.2"/><rect x="2.5" y="11.5" width="6" height="6" rx="1.2"/><rect x="11.5" y="11.5" width="6" height="6" rx="1.2"/></svg>
+        Dashboard
+      </a>
+      <a href="#/projects" data-route="projects">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><path d="M2.5 5.5c0-.8.7-1.5 1.5-1.5h3.5l1.5 2h7c.8 0 1.5.7 1.5 1.5v7c0 .8-.7 1.5-1.5 1.5h-12c-.8 0-1.5-.7-1.5-1.5z"/></svg>
+        Projects
+      </a>
+      <a href="#/notes" data-route="notes">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><path d="M5 2.5h7l3 3v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-13a1 1 0 0 1 1-1z"/><path d="M7 9h6M7 12.5h6M7 5.5h3"/></svg>
+        Notes
+      </a>
+      <a href="#/secretary" data-route="secretary">
+        <svg viewBox="0 0 20 20" fill="currentColor" width="18" height="18"><path d="M10 2l1.6 4.9L16.5 8.4l-4.9 1.6L10 15l-1.6-4.9-4.9-1.6 4.9-1.5z"/></svg>
+        AI Secretary
+      </a>
+      <a href="#/secrets" data-route="secrets">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><rect x="4" y="9" width="12" height="8" rx="1.5"/><path d="M6.5 9V6a3.5 3.5 0 0 1 7 0v3"/></svg>
+        Secrets
+      </a>
+      <a href="#/settings" data-route="settings">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18"><circle cx="10" cy="10" r="2.6"/><path d="M10 2.8v2M10 15.2v2M17.2 10h-2M4.8 10h-2M15.1 4.9l-1.4 1.4M6.3 13.7l-1.4 1.4M15.1 15.1l-1.4-1.4M6.3 6.3 4.9 4.9"/></svg>
+        Settings
+      </a>
+      <div class="side-nav-footer">
+        <span id="userEmailLabel" class="side-nav-email"></span>
+        <button type="button" class="btn-secondary btn-block" data-action="logout">Keluar</button>
+      </div>
+    </nav>
+    <div class="nav-overlay"></div>
+
+    <main id="mainContent" class="main-content">
+      <div class="loading">Memuat…</div>
+    </main>
+  </div>
+
+  <div id="modalRoot"></div>
+
+  <script type="module" src="/js/firebase-init.js"></script>
+  <script type="module" src="/js/auth.js"></script>
+  <script type="module" src="/js/router.js"></script>
+</body>
+</html>
