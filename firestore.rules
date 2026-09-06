@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // SEMUA akses data di aplikasi ini SENGAJA lewat backend (Vercel Functions)
+    // memakai Firebase Admin SDK, yang otomatis melewati (bypass) rules ini.
+    // Frontend tidak pernah memanggil Firestore secara langsung.
+    //
+    // Rules di bawah menolak seluruh akses langsung dari client sebagai lapisan
+    // pertahanan tambahan (defense-in-depth), BUKAN mekanisme keamanan utama.
+    // Keamanan sesungguhnya ada di /lib/auth.js (verifikasi token) dan
+    // /lib/ownership.js (pengecekan kepemilikan data) di sisi backend.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

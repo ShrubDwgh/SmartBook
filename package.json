@@ -1,0 +1,12 @@
+{
+  "name": "smartbook",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SmartBook - aplikasi catatan pribadi berbasis proyek dengan AI Secretary.",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "firebase-admin": "^13.0.0"
+  }
+}
