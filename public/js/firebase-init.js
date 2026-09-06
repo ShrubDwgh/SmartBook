@@ -13,12 +13,12 @@ import { getAuth } from 'https://www.gstatic.com/firebasejs/12.13.0/firebase-aut
  * semua data lewat /api/* (lihat README bagian Arsitektur).
  */
 const firebaseConfig = {
-  apiKey: 'GANTI_DENGAN_API_KEY_ANDA',
-  authDomain: 'GANTI_DENGAN_PROJECT_ID.firebaseapp.com',
-  projectId: 'GANTI_DENGAN_PROJECT_ID',
-  storageBucket: 'GANTI_DENGAN_PROJECT_ID.appspot.com',
-  messagingSenderId: 'GANTI_DENGAN_SENDER_ID',
-  appId: 'GANTI_DENGAN_APP_ID',
+  apiKey: 'AIzaSyCjzwYKHAFFefJLC0Vb9x46Olkx8Ay2Mpk',
+  authDomain: 'smartbook-3f3b1.firebaseapp.com',
+  projectId: 'smartbook-3f3b1',
+  storageBucket: 'smartbook-3f3b1.firebasestorage.app',
+  messagingSenderId: '667259316808',
+  appId: '1:667259316808:web:477432f511be4f85f7c67d',
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);
